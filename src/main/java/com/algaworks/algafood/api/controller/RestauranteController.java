@@ -71,7 +71,7 @@ public class RestauranteController {
 			Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 
 			if (restauranteAtual.isPresent()) {
-				BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+				BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento");
 
 				Restaurante restauranteSalva = cadastroRestauranteService.salvar(restauranteAtual.get());
 				return ResponseEntity.ok(restauranteSalva);
@@ -90,7 +90,7 @@ public class RestauranteController {
 			@RequestBody Map<String, Object> campos) {
 		Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 
-		if (restauranteAtual.isEmpty()) {
+		if (restauranteAtual.isEmpty()) {  
 			return ResponseEntity.notFound().build();
 		}
 
