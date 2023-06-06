@@ -25,29 +25,33 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
 		
-//		Problem problem = Problem.builder()
-//				.status(status.value())
-//				.type("https://algafood.com.br/entidade-nao-encontrada")
-//				.title("Entidade Não Encontrada")
-//				.detail(ex.getMessage())
-//				.build();
-		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), 
 				status, request);
 	}
 	
 	@ExceptionHandler(EntidadeEmUsoException.class)
 	public ResponseEntity<?> handleEntidadeEmUsoException(
-			EntidadeEmUsoException ex, WebRequest request) {
-		
-		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), 
-				HttpStatus.CONFLICT, request);
+	        EntidadeEmUsoException ex, WebRequest request) {
+	    
+	    HttpStatus status = HttpStatus.CONFLICT;
+	    ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
+	    String detail = ex.getMessage();
+	    
+	    Problem problem = createProblemBuilder(status, problemType, detail).build();
+	    
+	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request) {
-		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), 
-				HttpStatus.BAD_REQUEST, request);
+
+	    HttpStatus status = HttpStatus.BAD_REQUEST;
+	    ProblemType problemType = ProblemType.ERRO_NEGOCIO;
+	    String detail = ex.getMessage();
+	    
+	    Problem problem = createProblemBuilder(status, problemType, detail).build();
+	    
+	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
 	@Override
