@@ -19,8 +19,8 @@ public class CadastroCozinhaIntegrationTests {
 
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
-	@Test
-	public void testarCadastroCozinhaComSucesso() {
+	@Test   //when then
+	public void whenCadastrarCozinha_ThenDeveAtribuirId() {
 		//Happy path (caminho feliz)
 		// cenário
 		Cozinha novaCozinha = new Cozinha();
@@ -35,7 +35,7 @@ public class CadastroCozinhaIntegrationTests {
 	}
 
 	@Test()
-	public void testarCadastroCozinhaSemNome() {
+	public void whenCadastrarCozinhaSemNome_ThenDeveFalhar() {
 		//Unhappy path (caminho infeliz)
 		//cenário
 		Cozinha novaCozinha = new Cozinha();
@@ -50,5 +50,5 @@ public class CadastroCozinhaIntegrationTests {
 		// validação
 		assertThat(erroEsperado).isNotNull();
 	}
-	//unhappy path
+
 }
