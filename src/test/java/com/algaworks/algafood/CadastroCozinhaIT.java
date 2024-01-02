@@ -2,6 +2,8 @@ package com.algaworks.algafood;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,13 +19,17 @@ import static io.restassured.RestAssured.given;
 public class CadastroCozinhaIT {
     @LocalServerPort
     private int port;
+
+    @BeforeEach
+    public void setUp(){
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.port = port;
+        RestAssured.basePath = "/cozinhas";
+    }
     @Test
     public void whenConsultarCozinhas_ThenDeveRetornar200(){
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         given()
-                .basePath("/cozinhas")
-                .port(port)
                 .accept(ContentType.JSON)
         .when()
                 .get()
@@ -33,11 +39,8 @@ public class CadastroCozinhaIT {
 
     @Test
     public void whenConsultarCozinhas_ThenDeveConter4Cozinhas(){
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         given()
-                .basePath("/cozinhas")
-                .port(port)
                 .accept(ContentType.JSON)
         .when()
                 .get()
