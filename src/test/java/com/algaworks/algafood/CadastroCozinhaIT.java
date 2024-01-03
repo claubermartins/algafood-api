@@ -1,8 +1,10 @@
 package com.algaworks.algafood;
 
+import com.algaworks.algafood.domain.model.Cozinha;
+import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.util.DatabaseCleaner;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,14 +25,17 @@ public class CadastroCozinhaIT {
     @LocalServerPort
     private int port;
     @Autowired
-    private Flyway flyway;
+    private DatabaseCleaner databaseCleaner;
+    @Autowired
+    private CozinhaRepository cozinhaRepository;
     @BeforeEach
     public void setUp(){
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
         RestAssured.basePath = "/cozinhas";
 
-        flyway.migrate();
+        databaseCleaner.clearTables();
+        prepararDados();
     }
     @Test
     public void whenConsultarCozinhas_ThenDeveRetornar200(){
@@ -44,15 +49,15 @@ public class CadastroCozinhaIT {
     }
 
     @Test
-    public void whenConsultarCozinhas_ThenDeveConter4Cozinhas(){
+    public void whenConsultarCozinhas_ThenDeveConter2Cozinhas(){
 
         given()
                 .accept(ContentType.JSON)
         .when()
                 .get()
         .then()
-                .body("", hasSize(4))
-                .body("nome", hasItems("Indiana","Tailandesa"));
+                .body("", hasSize(2))
+                .body("nome", hasItems("Tailandesa","Americana"));
     }
 
     @Test
@@ -65,5 +70,15 @@ public class CadastroCozinhaIT {
                 .post()
         .then()
                 .statusCode(HttpStatus.CREATED.value());
+    }
+
+    private void prepararDados(){
+        Cozinha cozinha1 = new Cozinha();
+        cozinha1.setNome("Tailandesa");
+        cozinhaRepository.save(cozinha1);
+
+        Cozinha cozinha2 = new Cozinha();
+        cozinha2.setNome("Americana");
+        cozinhaRepository.save(cozinha2);
     }
 }
