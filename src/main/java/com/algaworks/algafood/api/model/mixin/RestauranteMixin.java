@@ -20,10 +20,10 @@ public abstract class RestauranteMixin {
     @JsonIgnore
     private Endereco endereco;
 
-//    @JsonIgnore
+    @JsonIgnore
     private OffsetDateTime dataCadastro;
 
-//    @JsonIgnore
+    @JsonIgnore
     private OffsetDateTime dataAtualizacao;
 
     @JsonIgnore

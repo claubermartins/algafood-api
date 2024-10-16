@@ -2,6 +2,7 @@ package com.algaworks.algafood.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -36,11 +37,11 @@ public class Pedido {
 	private StatusPedido status;
 
 	@CreationTimestamp
-	private LocalDateTime dataCriacao;
+	private OffsetDateTime dataCriacao;
 
-	private LocalDateTime dataConfirmacao;
-	private LocalDateTime dataCancelamento;
-	private LocalDateTime dataEntrega;
+	private OffsetDateTime dataConfirmacao;
+	private OffsetDateTime dataCancelamento;
+	private OffsetDateTime dataEntrega;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
