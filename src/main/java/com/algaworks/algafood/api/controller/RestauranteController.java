@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.algaworks.algafood.api.model.RestauranteModel;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,9 @@ public class RestauranteController {
 	}
 
 	@GetMapping("/{restauranteId}")
-	public Restaurante buscar(@PathVariable Long restauranteId) {
-		return cadastroRestauranteService.buscarOuFalhar(restauranteId);
+	public RestauranteModel buscar(@PathVariable Long restauranteId) {
+		return null;
+		//return cadastroRestauranteService.buscarOuFalhar(restauranteId);
 	}
 
 	@PostMapping
